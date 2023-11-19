@@ -1,20 +1,18 @@
 pizza = []
 drink = []
 price: int = 0
-mode_of_payment = ""
-remove_this = ""
 
-pizza_choice: dict[str, int] = {"Hawaiian": 299,
-                                "Cheesy Bacon": 299,
-                                "Vegetarian": 259,
-                                "Margherita": 299,
-                                "Pepperoni": 299}
+pizza_choice = {"Hawaiian": 299,
+                "Cheesy Bacon": 299,
+                "Vegetarian": 259,
+                "Margherita": 299,
+                "Pepperoni": 299}
 
-drinks_choice: dict[str, int] = {"Coca Cola": 20,
-                                 "Iced Lemon Tea": 20,
-                                 "Pineapple Juice": 20,
-                                 "Royal": 20,
-                                 "Orange Juice": 20}
+drinks_choice = {"Coca Cola": 20,
+                 "Iced Lemon Tea": 20,
+                 "Pineapple Juice": 20,
+                 "Royal": 20,
+                 "Orange Juice": 20}
 
 
 def get_pizza():
@@ -432,8 +430,8 @@ def order():
     while True:
         try:
             print(f"\n\tHow may I help you?")
-            do: str = input("\t[1]Order\n\t[2]Leave\n\t[3]Change Order\n\t[4]Clear Order\n\t[5]Current order"
-                            "\n\t: ")
+            do = input("\t[1]Order\n\t[2]Leave\n\t[3]Change Order\n\t[4]Clear Order\n\t[5]Current order"
+                       "\n\t: ")
 
             if do == "1":
                 What_to_order()
@@ -458,6 +456,7 @@ def order():
 
 
 def What_to_order():
+    """Asks the user what to order (pizza or drink)"""
     while True:
         try:
 
