@@ -31,6 +31,9 @@ def get_pizza():
             if "Cheesy" and "bacon" in get_this_pizza:
                 get_this_pizza = "Cheesy Bacon"
 
+            elif get_this_pizza not in pizza_choice:
+                raise ValueError
+
             price += pizza_choice[get_this_pizza]
             pizza.append(get_this_pizza)
 
@@ -44,11 +47,10 @@ def get_pizza():
                 break
             elif decision != "1" or "2":
                 print("\tInvalid option")
-                break
+                raise ValueError
 
         except ValueError:
-            print(f"\tThere is no such option")
-            continue
+            print(f"\tThere is no such option\n")
 
 
 def get_drink():
@@ -89,6 +91,10 @@ def get_drink():
             elif decision == "2":
                 break
 
+            elif decision != "1" or "2":
+                print("\tInvalid option")
+                raise ValueError
+
         except ValueError:
             print(f"\tThere is no such option")
 
@@ -118,7 +124,7 @@ def change_order():
                 print("\tYou have no order")
                 break
             else:
-                what_to_change = input("\n\t[1]Remove an order [2]Replace an order: ").strip()
+                what_to_change = input("\n\t[1]Remove an order [2]Replace an order [3]Back: ").strip()
                 if what_to_change == "1":
 
                     if len(drink) < 1 <= len(pizza):
@@ -309,6 +315,10 @@ def change_order():
 
                                 elif decision != "1" or "2":
                                     raise TypeError
+
+                elif what_to_change == "3":
+                    break
+
         except ValueError:
             print("\tInvalid input\n")
 
@@ -324,31 +334,14 @@ def clear_order():
                 print("\tYou have no order")
                 break
 
-            elif len(pizza) > 1 > len(drink):
-                print(f"\n\tYou currently have an order of: ")
-                for p in pizza:
-                    print(f"\n\tPizza:")
-                    print(f"\t{p} - {pizza_choice[p]}")
-
-            elif len(drink) > 1 > len(pizza):
-                for d in drink:
-                    print(f"\n\tDrinks:")
-                    print(f"\t{d} - {drinks_choice[d]}")
             else:
-                print(f"\n\tYou currently have an order of: ")
-                for p in pizza:
-                    print(f"\n\tPizza:")
-                    print(f"\t{p} - {pizza_choice[p]}")
-
-                for d in drink:
-                    print(f"\n\tDrinks:")
-                    print(f"\t{d} - {drinks_choice[d]}")
-
                 decision = input("\n\tAre you sure you want to clear your order? \n\t[1]Yes [2] No: ").strip()
                 if decision == "1":
                     pizza.clear()
                     drink.clear()
                     print(f"\tYou have deleted your order")
+                    break
+
                 elif decision == "2":
                     break
         except ValueError:
@@ -367,17 +360,17 @@ def delivery():
 
                 if len(drink) < 1 <= len(pizza):
                     print(f"\n\tYour order of {len(pizza)} pizza/s : {', '.join(pizza[::1])}, is going to be delivered"
-                          f" at {address}. Please prepare ₱{price} to be payed through {mode_of_payment}.")
+                          f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
                     break
 
                 elif len(pizza) < 1 <= len(drink):
                     print(f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])}, is going to be delivered"
-                          f" at {address}. Please prepare ₱{price} to be payed through {mode_of_payment}.")
+                          f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
 
                 elif len(drink) > 1 and len(pizza) > 1:
                     print(f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])}. And {len(pizza)} pizza/s"
                           f": {', '.join(pizza[::1])} is going to be delivered"
-                          f" at {address}. Please prepare ₱{price} to be payed through {mode_of_payment}.")
+                          f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
 
                 elif len(drink) < 1 and len(pizza) < 1:
                     print("You did not order anything.")
@@ -386,18 +379,20 @@ def delivery():
             elif decision == "2":
 
                 print("\n\tOkay.")
+                print(len(pizza))
+                print(len(drink))
 
                 if len(drink) < 1 <= len(pizza):
                     print(f"\n\tYour order of {len(pizza)} pizza/s : {', '.join(pizza[::1])}. Please prepare ₱{price}"
-                          f" to be payed through {mode_of_payment}.")
+                          f" to be paid through {mode_of_payment}.")
 
                 elif len(pizza) < 1 <= len(drink):
                     print(f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])}. Please prepare ₱{price}"
-                          f" to be payed through {mode_of_payment}.")
+                          f" to be paid through {mode_of_payment}.")
 
-                elif len(drink) > 1 and len(pizza) > 1:
+                elif len(drink) >= 1 and len(pizza) >= 1:
                     print(f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])}. And {len(pizza)} pizza/s"
-                          f": {', '.join(pizza[::1])}. Please prepare ₱{price} to be payed through {mode_of_payment}.")
+                          f": {', '.join(pizza[::1])}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
 
                 elif len(drink) < 1 and len(pizza) < 1:
                     print("You did not order anything.")
@@ -441,29 +436,7 @@ def order():
                             "\n\t: ")
 
             if do == "1":
-
-                what_to_order = input("\n\tWhat would you like to order?\n\t[1]Pizza [2] Drinks : ")
-
-                if what_to_order == "1":
-                    get_pizza()
-
-                elif what_to_order == "2":
-                    get_drink()
-                else:
-                    raise ValueError
-
-                decision = input(f"\tAdd / Change order? [1]Yes [2] No: ").strip()
-
-                if decision == "1":
-                    continue
-
-                elif decision == "2":
-                    payment()
-                    delivery()
-                    order_again()
-                elif do == "2":
-                    print(f"\n\tHave a great day!")
-                    quit()
+                What_to_order()
 
             elif do == "2":
                 leave()
@@ -484,6 +457,37 @@ def order():
             print(f"\tInvalid input\n")
 
 
+def What_to_order():
+    while True:
+        try:
+
+            what_to_order = input("\n\tWhat would you like to order?\n\t[1]Pizza [2]Drinks [3]Back : ")
+
+            if what_to_order == "1":
+                get_pizza()
+
+            elif what_to_order == "2":
+                get_drink()
+
+            elif what_to_order == "3":
+                break
+            else:
+                raise ValueError
+
+            decision = input(f"\tAdd / Change order? [1]Yes [2] No: ").strip()
+
+            if decision == "1":
+                continue
+
+            elif decision == "2":
+                payment()
+                delivery()
+                order_again()
+
+        except ValueError:
+            print("\n\tInvalid input")
+
+
 def order_again():
     """A function that asks the user if they want to order again"""
     while True:
@@ -498,7 +502,7 @@ def order_again():
 
 
 def current_order():
-    """Sees current order"""
+    """See current order"""
     while True:
         try:
             if len(pizza) < 1 and len(drink) < 1:
