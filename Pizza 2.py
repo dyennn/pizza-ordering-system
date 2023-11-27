@@ -122,7 +122,7 @@ def change_order():
                 print("\tYou have no order")
                 break
             else:
-                what_to_change = input("\n\t[1]Remove an order [2]Replace an order [3]Back: ").strip()
+                what_to_change = input("\n\t[1]Remove an order \n\t[2]Replace an order \n\t[3]Back\n\t: ").strip()
                 if what_to_change == "1":
 
                     if len(drink) < 1 <= len(pizza):
@@ -137,7 +137,7 @@ def change_order():
                             print(f"\tYour current pizza/s are {', '.join(pizza[::1])}."
                                   f" Your current total is ₱{price} ")
 
-                            decision = input("Change Order? [1]Yes [N]No").strip()
+                            decision = input("Change Order? [1]Yes [2]No").strip()
                             if decision == "1":
                                 continue
 
@@ -154,7 +154,7 @@ def change_order():
                                 drink.remove(remove_this)
                                 print(f"\tYour current drink/s are {', '.join(drink[::1])}")
 
-                                decision = input("\tChange Order? [1]Yes [N]No").strip()
+                                decision = input("\tChange Order? [1]Yes [2]No").strip()
                                 if decision == "1":
                                     continue
 
@@ -176,7 +176,7 @@ def change_order():
                                 pizza.remove(remove_this)
                                 print(f"\tYour current pizza/s are {', '.join(pizza[::1])}")
 
-                                decision = input("\tChange Order? [1]Yes [N]No").strip()
+                                decision = input("\tChange Order? [1]Yes [2]No").strip()
                                 if decision == "1":
                                     continue
 
@@ -257,7 +257,7 @@ def change_order():
                             print(
                                 f"\tYour current pizza/s are {', '.join(pizza[::1])}. Your current total is ₱{price} ")
 
-                            decision = input("\tChange Order? [1]Yes [N]No: ").strip()
+                            decision = input("\tChange Order? [1]Yes [2]No: ").strip()
                             if decision == "1":
                                 continue
 
@@ -295,7 +295,7 @@ def change_order():
                                 print(f"\tYour current pizza/s are {', '.join(drink[::1])}."
                                       f" Your current total is ₱{price} ")
 
-                                decision = input("Change Order? [1]Yes [N]No: ").strip()
+                                decision = input("Change Order? [1]Yes [2]No: ").strip()
                                 if decision == "1":
                                     continue
 
