@@ -118,7 +118,7 @@ def get_drink():
             drink.append(f"{quantity} {drinks_code[get_this_drink]}")
 
             current_order()
-            decision = input("\n\tAdd more?\n\t[1] Yes\n\t[2] No : ")
+            decision = input("\n\tAdd more?\n\t[1] Yes\n\t[2] No \n\t: ")
 
             if decision == "1":
                 continue
@@ -164,23 +164,31 @@ def change_order():
 
                 # CHANGE ORDER
 
-                what_to_change = input("\n\t[1] Remove an order\n\t[2] Replace an order\n\t[3] Back: ").strip()
+                what_to_change = input("\n\t[1] Remove an order\n\t[2] Replace an order\n\t[3] Back\n\t: ").strip()
                 if what_to_change == "1":
 
                     if len(drink) < 1 <= len(pizza):
-
-                        print("\n\tWhat do you want to remove?")
+                        # REMOVE PIZZA
+                        print()
                         for i, item in enumerate(pizza):
-                            print(f"\t[{i + 1}] - {item}")
+                            print(f"\t[{i + 1}] -> {item}")
+
                         remove_this = int(input(f"\n\tWhat do you want to remove?: "))
 
                         temp = pizza[remove_this - 1].split()[1::]
 
                         if "Cheesy" or "bacon" in temp[::]:
                             temp = ["Cheesy Bacon"]
+                        confirmation = input(f"\n\tAre you sure you would like to remove {temp[remove_this - 1]}? "
+                                             f"\n\t[1] Yes\n\t[2] No\n\t: ")
 
-                        price -= pizza_choice[temp[0]] * int(pizza[remove_this - 1].split()[0])
-                        pizza.pop(remove_this - 1)
+                        if confirmation == "1":
+
+                            price -= pizza_choice[temp[0]] * int(pizza[remove_this - 1].split()[0])
+                            pizza.pop(remove_this - 1)
+
+                        elif confirmation == "2":
+                            continue
 
                         if len(pizza) < 1:
                             print("\n\tYou have cleared your order")
@@ -203,10 +211,10 @@ def change_order():
                             raise TypeError
 
                     elif len(pizza) < 1 <= len(drink):
-
+                        # REMOVE DRINK
                         print("\n\tDrink/s: ")
                         for d in drink:
-                            print(f"[{len(d + 1)}] {d}")
+                            print(f"[{len(d + 1)}] -> {d}")
 
                         remove_this = input(f"\n\tWhat do you want to remove? : ")
 
@@ -224,8 +232,16 @@ def change_order():
                         elif "Orange" and "juice" in temp[::]:
                             temp = ["Orange Juice"]
 
-                        price -= drinks_choice[temp[0]] * int(drink[remove_this - 1].split()[0])
-                        drink.pop(remove_this - 1)
+                        confirmation = input(f"\n\tAre you sure you would like to remove {temp[remove_this - 1]}? "
+                                             f"\n\t[1] Yes\n\t[2] No\n\t: ")
+
+                        if confirmation == "1":
+
+                            price -= drinks_choice[temp[0]] * int(drink[remove_this - 1].split()[0])
+                            drink.pop(remove_this - 1)
+
+                        elif confirmation == "2":
+                            continue
 
                         if len(drink) < 1:
                             print("\tYou have cleared your order")
@@ -257,9 +273,15 @@ def change_order():
                             if "Cheesy" or "bacon" in temp[::]:
                                 temp = ["Cheesy Bacon"]
 
-                            price -= pizza_choice[temp[0]] * int(pizza[remove_this - 1].split()[0])
-                            pizza.pop(remove_this - 1)
+                            confirmation = input(f"\n\tAre you sure you would like to remove {temp[remove_this - 1]}? "
+                                                 f"\n\t[1] Yes\n\t[2] No\n\t: ")
 
+                            if confirmation == "1":
+                                price -= pizza_choice[temp[0]] * int(pizza[remove_this - 1].split()[0])
+                                pizza.pop(remove_this - 1)
+
+                            elif confirmation == "2":
+                                continue
                         elif change_this == "2":
                             print("\n\tDrink/s: ")
                             for d in drink:
@@ -280,9 +302,16 @@ def change_order():
 
                             elif "Orange" and "juice" in temp[::]:
                                 temp = ["Orange Juice"]
+                            confirmation = input(f"\n\tAre you sure you would like to remove {temp[remove_this - 1]}? "
+                                                 f"\n\t[1] Yes\n\t[2] No\n\t: ")
 
-                            price -= drinks_choice[temp[0]] * int(drink[remove_this - 1].split()[0])
-                            drink.pop(remove_this - 1)
+                            if confirmation == "1":
+
+                                price -= drinks_choice[temp[0]] * int(drink[remove_this - 1].split()[0])
+                                drink.pop(remove_this - 1)
+
+                            if confirmation == "1":
+                                continue
 
                             decision = input("\tChange Order?\n\t[1]Yes\n\t[2]No\n\t:").strip()
                             if decision == "1":
@@ -514,7 +543,7 @@ def payment():
     global mode_of_payment
     while True:
         try:
-            pay_with = input(f"\n\tMode of Payment\n\t[1] Cash\n\t[2] Credit\n\t[3] Debit \n\t[4] GCash\n\t:")
+            pay_with = input(f"\n\tMode of Payment\n\t[1] Cash\n\t[2] Credit\n\t[3] Debit \n\t[4] GCash\n\t: ")
             if pay_with == "1":
                 mode_of_payment = "Cash"
 
@@ -539,32 +568,69 @@ def delivery():
     """Asks the user if delivery or no. Shows the total order at the end"""
     while True:
         try:
-            decision = input("\n\tDeliver to your doorstep? [1] Yes [2] No: ")
+            def decide():
+                while True:
+                    try:
+                        decision = input("\n\tDeliver to your doorstep? \n\t[1] Yes \n\t[2] No\n\t: ")
+                        if decision == "1":
 
-            if decision == "1":
+                            address = input("\tInput your delivery address: ")
 
-                address = input("\tInput your delivery address: ")
+                            if len(drink) < 1 <= len(pizza):
+                                print(
+                                    f"\n\tYour order of {len(pizza)} pizza/s : {', '.join(pizza[::1])}, "
+                                    f"is going to be delivered"
+                                    f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
+                                order_again()
 
-                if len(drink) < 1 <= len(pizza):
-                    print(f"\n\tYour order of {len(pizza)} pizza/s : {', '.join(pizza[::1])}, is going to be delivered"
-                          f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
-                    break
+                            elif len(pizza) < 1 <= len(drink):
+                                print(
+                                    f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])},"
+                                    f" is going to be delivered"
+                                    f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
+                                order_again()
 
-                elif len(pizza) < 1 <= len(drink):
-                    print(f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])}, is going to be delivered"
-                          f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
+                            elif len(drink) > 1 and len(pizza) > 1:
+                                print(
+                                    f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])}. "
+                                    f"And {len(pizza)} pizza/s"
+                                    f": {', '.join(pizza[::1])} is going to be delivered"
+                                    f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
+                                order_again()
 
-                elif len(drink) > 1 and len(pizza) > 1:
-                    print(f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])}. And {len(pizza)} pizza/s"
-                          f": {', '.join(pizza[::1])} is going to be delivered"
-                          f" at {address}. Please prepare ₱{price} to be paid through {mode_of_payment}.")
+                            elif len(drink) < 1 and len(pizza) < 1:
+                                print("You did not order anything.")
+                                break
 
-                elif len(drink) < 1 and len(pizza) < 1:
-                    print("You did not order anything.")
-                    break
+                        elif decision == "2":
 
-            elif decision == "2":
+                            print("\n\tOkay.")
 
+                            if len(drink) < 1 <= len(pizza):
+                                print(
+                                    f"\n\tYour order of {len(pizza)} pizza/s : {', '.join(pizza[::1])}."
+                                    f" Please prepare ₱{price}"
+                                    f" to be paid through {mode_of_payment}.")
+                                order_again()
+                            elif len(pizza) < 1 <= len(drink):
+                                print(
+                                    f"\n\tYour order of {len(drink)} drink/s : {', '.join(drink[::1])}."
+                                    f" Please prepare ₱{price}"
+                                    f" to be paid through {mode_of_payment}.")
+                                order_again()
+                            elif len(drink) >= 1 and len(pizza) >= 1:
+                                print(
+                                    f"\n\tYour order of {len(drink)} drink/s :"
+                                    f" {', '.join(drink[::1])}. And {len(pizza)} pizza/s"
+                                    f": {', '.join(pizza[::1])}. "
+                                    f"Please prepare ₱{price} to be paid through {mode_of_payment}.")
+                                order_again()
+                            elif len(drink) < 1 and len(pizza) < 1:
+                                print("You did not order anything.")
+                                break
+                    except ValueError:
+                        print(f"\n\tInvalid option")
+            if mode_of_payment == "Cash":
                 print("\n\tOkay.")
 
                 if len(drink) < 1 <= len(pizza):
@@ -582,6 +648,9 @@ def delivery():
                 elif len(drink) < 1 and len(pizza) < 1:
                     print("You did not order anything.")
                     break
+
+            elif mode_of_payment == "Credit" or "Debit" or "GCash":
+                decide()
             else:
                 raise ValueError
 
@@ -650,7 +719,7 @@ def check_out():
                 print("\n\tYou have no order")
                 break
             else:
-                decision = input("\n\tWould you like to check out?\n\t[1] Yes \n\t[2] No\n\t:")
+                decision = input("\n\tAre you sure you would like to check out?\n\t[1] Yes \n\t[2] No\n\t: ")
                 if decision == "1":
                     payment()
                     delivery()
