@@ -149,6 +149,7 @@ def leave():
             print("Invalid input")
 
 
+# noinspection PyGlobalUndefined
 def change_order():
     """Asks the user if they want to replace/change an order"""
     while True:
@@ -507,6 +508,7 @@ def clear_order():
             print("\tInvalid input")
 
 
+# noinspection PyGlobalUndefined
 def payment():
     """A function that will define the mode of payment"""
     global mode_of_payment
@@ -527,7 +529,7 @@ def payment():
 
             else:
                 print("\tNo such option")
-
+                continue
             return mode_of_payment
         except ValueError:
             print("\tInvalid input")
