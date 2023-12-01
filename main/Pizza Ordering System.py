@@ -662,14 +662,18 @@ def order_again():
     """A function that asks the user if they want to order again"""
     while True:
         try:
+            global price
             decision = input(f"\n\tDo you want to order again? \n\t[1] Yes \n\t[2] No\n\t: ").strip()
             if decision == "1":
                 pizza.clear()
                 drink.clear()
-                order()
+                price = 0
+                What_to_order()
             elif decision == "2":
-                print("\n\tEnjoy your meal!")
-                quit()
+                pizza.clear()
+                drink.clear()
+                price = 0
+                order()
         except ValueError:
             print("\tInvalid input")
 
